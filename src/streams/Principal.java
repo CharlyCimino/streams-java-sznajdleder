@@ -1,6 +1,7 @@
 package streams;
 
-import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -13,12 +14,14 @@ public class Principal {
 
     public static void main(String[] args) throws IOException {
 
-        FileInputStream fis = new FileInputStream("demo.txt");
-        int c = fis.read();
+        FileReader fr = new FileReader("demo.txt");
+        FileWriter fw = new FileWriter("copia.txt");
+        int c = fr.read(); // Codifica 8 bits (1 byte)
         while (c != -1) {
-            System.out.print((char) c);
-            c = fis.read();
+            fw.write(c);
+            c = fr.read();
         }
-        fis.close();
+        fw.close();
+        fr.close();
     }
 }
