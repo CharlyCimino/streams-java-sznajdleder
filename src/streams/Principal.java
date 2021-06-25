@@ -12,13 +12,9 @@ import java.io.PrintStream;
 public class Principal {
 
     public static void main(String[] args) {
-        FileOutputStream fos = null;
-        PrintStream stdErr = null;
-        try {
-            // abro el archivo
-            fos = new FileOutputStream("errores.txt");
-            // instancio un printstream basado en el input stream
-            stdErr = new PrintStream(fos);
+        
+        try (FileOutputStream fos = new FileOutputStream("errores.txt");
+            PrintStream stdErr = new PrintStream(fos);) {
             // seteo la estandard error
             System.setErr(stdErr);
             int[] arr = new int[5];
@@ -28,17 +24,6 @@ public class Principal {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            try {
-                if (stdErr != null) {
-                    stdErr.close();
-                }
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
         }
     }
 }
