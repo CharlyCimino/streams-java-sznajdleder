@@ -1,7 +1,7 @@
 package streams;
 
-import java.io.FileInputStream;
-import java.util.Scanner;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 /**
  *
@@ -12,19 +12,18 @@ import java.util.Scanner;
 public class Principal {
 
     public static void main(String[] args) throws Exception {
-        // abro el archivo
-        FileInputStream fis = new FileInputStream("demo.txt");
-        // instancio a Scanner pasandole el FileInputStream
-        Scanner sc = new Scanner(fis);
-        int i = sc.nextInt();
-        String n = sc.next();
-        while (!n.equals("FIN")) {
-            System.out.println(i + ", " + n);
-            i = sc.nextInt();
-            n = sc.next();
+        // abro el archivo y redirecciono la standar error
+        FileOutputStream fos = new FileOutputStream("errores.txt");
+        PrintStream stdErr = new PrintStream(fos);
+        System.setErr(stdErr);
+        int[] arr = new int[5];
+        // error cuando i sea mayor que 4
+        for (int i = 0; i < 10; i++) {
+            arr[i] = 0;
         }
-        // cierro el archivo
-        fis.close();
+        // cierro todo
+        stdErr.close();
+        fos.close();
     }
 
 }
