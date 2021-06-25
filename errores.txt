@@ -1,2 +1,2 @@
-Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5
-	at streams.Principal.main(Principal.java:22)
+java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5
+	at streams.Principal.main(Principal.java:27)
