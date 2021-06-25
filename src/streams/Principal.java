@@ -1,7 +1,7 @@
 package streams;
 
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  *
@@ -11,19 +11,14 @@ import java.io.PrintStream;
  */
 public class Principal {
 
-    public static void main(String[] args) {
-        
-        try (FileOutputStream fos = new FileOutputStream("errores.txt");
-            PrintStream stdErr = new PrintStream(fos);) {
-            // seteo la estandard error
-            System.setErr(stdErr);
-            int[] arr = new int[5];
-            // error cuando i sea mayor que 4
-            for (int i = 0; i < 10; i++) {
-                arr[i] = 0;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public static void main(String[] args) throws IOException {
+
+        FileInputStream fis = new FileInputStream("demo.txt");
+        int c = fis.read();
+        while (c != -1) {
+            System.out.print((char) c);
+            c = fis.read();
         }
+        fis.close();
     }
 }
