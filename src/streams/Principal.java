@@ -2,13 +2,12 @@ package streams;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -18,31 +17,29 @@ import java.util.Scanner;
  */
 public class Principal {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("streams-datos.txt"));
-        DataOutputStream dos = new DataOutputStream(bos);
-        Scanner scanner = new Scanner(System.in);
-        int i = scanner.nextInt();
-        while (i > 0) {
-            dos.writeInt(i);
-            i = scanner.nextInt();
-        }
-        dos.close();
+        String arch = "personas.dat";
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(arch));
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(new Persona(10, "Pablo", "23.112.223"));
+        oos.writeObject(new Persona(20, "Pedro", "35.213.321"));
+        oos.writeObject(new Persona(30, "Juan", "17.554.843"));
+        oos.close();
         bos.close();
-        // AHORA SE LEE
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream("streams-datos.txt"));
-        DataInputStream dis = new DataInputStream(bis);
+        // Ahora se lee
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(arch));
+        ObjectInputStream ois = new ObjectInputStream(bis);
         try {
-            int j = dis.readInt();
+            Persona p = (Persona) ois.readObject();
             while (true) {
-                System.out.println(j);
-                j = dis.readInt();
+                System.out.println(p);
+                p = (Persona) ois.readObject();
             }
         } catch (EOFException ex) {
             System.out.println("-- EOF --");
         }
-        dis.close();
+        ois.close();
         bis.close();
     }
 }
